@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Homeland &mdash; Colorlib Website Template</title>
+    <title>Caviedes SAC &mdash; Colorlib Website Template</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -44,7 +44,7 @@
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-8 col-md-8 col-lg-4">
-              <h1 class="mb-0"><a href="index.html" class="text-white h2 mb-0"><strong>Homeland<span class="text-danger">.</span></strong></a></h1>
+              <h1 class="mb-0"><a href="index.php" class="text-white h2 mb-0"><strong>CAVIEDES SAC<span>.</span></strong></a></h1>
             </div>
             <div class="col-4 col-md-4 col-lg-8">
               <nav class="site-navigation text-right text-md-right" role="navigation">
@@ -53,29 +53,30 @@
 
                 <ul class="site-menu js-clone-nav d-none d-lg-block">
                   <li class="active">
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Inicio</a>
                   </li>
-                  <li><a href="buy.html">Buy</a></li>
-                  <li><a href="rent.html">Rent</a></li>
+                  <li><a href="buy.html">Compras</a></li>
+                  <li><a href="rent.html">Rentas</a></li>
                   <li class="has-children">
-                    <a href="properties.html">Properties</a>
+                    <a href="properties.html">Propiedades</a>
                     <ul class="dropdown arrow-top">
-                      <li><a href="#">Condo</a></li>
-                      <li><a href="#">Property Land</a></li>
-                      <li><a href="#">Commercial Building</a></li>
-                      <li class="has-children">
+                      <li><a href="#">Condominio</a></li>
+                      <li><a href="#">Propiedad Privada</a></li>
+                      <li><a href="#">Departamento</a></li>
+                      <!--<li class="has-children">
                         <a href="#">Sub Menu</a>
                         <ul class="dropdown">
                           <li><a href="#">Menu One</a></li>
                           <li><a href="#">Menu Two</a></li>
                           <li><a href="#">Menu Three</a></li>
                         </ul>
-                      </li>
+                      </li>!-->
                     </ul>
                   </li>
-                  <li><a href="blog.html">Blog</a></li>
-                  <li><a href="about.html">About</a></li>
-                  <li><a href="contact.html">Contact</a></li>
+                  <li><a href="contact.html">Contactanos</a></li>
+                  <li><a href="php/login.php">Login</a></li>
+                  <li><a href="php/registro.php">Registro</a></li>
+
                 </ul>
               </nav>
             </div>
