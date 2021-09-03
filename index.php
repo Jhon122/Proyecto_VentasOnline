@@ -1,3 +1,7 @@
+<?php
+include("BD/conexion.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -74,8 +78,8 @@
                     </ul>
                   </li>
                   <li><a href="contact.html">Contactanos</a></li>
-                  <li><a href="php/login.php">Login</a></li>
-                  <li><a href="php/registro.php">Registro</a></li>
+                  <li><a href="#">Blog</a></li>
+                  <li><a href="php/ingreso.php">Ingresar</a></li>
 
                 </ul>
               </nav>
