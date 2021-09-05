@@ -1,11 +1,66 @@
 <?php
 include("../BD/conexion.php");
+session_start();
+if(isset($_SESSION['id_usuario'])){
+	header("Location: admin.php");
+}
 
+//login usuario
+if(isset($_POST["ingresar"])){
+
+	$usuario = mysqli_real_escape_string($conexion, $_POST['user']);
+	$password = mysqli_real_escape_string($conexion, $_POST['pass']);
+	$password_encriptada = sha1($password);
+	$sql = "SELECT idusuarios FROM usuarios 
+			WHERE usuario = '$usuario' AND password = '$password_encriptada'";
+	$resultado = $conexion->query($sql);
+	$rows = $resultado->num_rows;
+	if($rows>0){
+		$row = $resultado->fetch_assoc();
+		$_SESSION['id_usuario'] = $row["idusuarios"];
+		header("Location: admin.php");
+	}else{
+			echo "<script>
+				alert('Usuario o Password Incorrecto');
+				window.location = 'ingreso.php';
+			</script>";
+	}
+}
+
+//registrar usuario
 if(isset($_POST["registrar"])){
 	$nombre= mysqli_real_escape_string($conexion, $_POST['nombre']);
-	$nombre= mysqli_real_escape_string($conexion, $_POST['correo']);
-	$nombre= mysqli_real_escape_string($conexion, $_POST['user']);
-	$nombre= mysqli_real_escape_string($conexion, $_POST['pass']);
+	$correo= mysqli_real_escape_string($conexion, $_POST['correo']);
+	$usuario= mysqli_real_escape_string($conexion, $_POST['user']);
+	$password= mysqli_real_escape_string($conexion, $_POST['pass']);
+	$password_encriptada = sha1($password);
+	$sqluser = "SELECT idusuarios FROM usuarios 
+						WHERE usuario = '$usuario'";
+	$resultadouser = $conexion->query($sqluser);
+	$filas = $resultadouser->num_rows;
+	if($filas > 0){
+		echo "<script>
+				alert('El usuario ya existe');
+				window.location = 'ingreso.php';
+			</script>";
+	}else{
+		$sqlusuario = "INSERT  INTO 
+			usuarios(NombreC,Correo, Usuario, Password) 
+			VALUES ('$nombre','$correo','$usuario','$password_encriptada')";
+		$resultadousuario = $conexion->query($sqlusuario);
+		if($resultadousuario > 0) {
+		echo "<script>
+				alert('Registro Exitoso');
+				window.location = 'ingreso.php';
+			</script>";
+		}else{
+		echo "<script>
+				alert('Error al registrarse');
+				window.location = 'ingreso.php';
+			</script>";
+		}
+	}
+
 
 }
 
@@ -48,7 +103,7 @@ if(isset($_POST["registrar"])){
 		<![endif]-->
 	</head>
 
-	<body class="login-layout light-login">
+	<body class="login-layout">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -79,14 +134,14 @@ if(isset($_POST["registrar"])){
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control"  name="user"placeholder="Usuario" />
+															<input type="text" class="form-control"  name="user"placeholder="Usuario" required/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="pass"class="form-control" placeholder="Contraseña" />
+															<input type="password" name="pass"class="form-control" placeholder="Contraseña" required />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
@@ -99,7 +154,7 @@ if(isset($_POST["registrar"])){
 															<span class="lbl"> Recordarme</span>
 														</label>
 
-											<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+											<button type="submit" name="ingresar" class="width-35 pull-right btn btn-sm btn-primary">
 												<i class="ace-icon fa fa-key"></i>
 												<span class="bigger-110">Ingresar</span>
 											</button>
