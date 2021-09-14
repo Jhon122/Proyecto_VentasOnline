@@ -7,7 +7,7 @@ if(!isset($_SESSION['id_usuario'])){
 $iduser = $_SESSION['id_usuario'];
 
 $sql = "SELECT idusuarios, NombreC FROM usuarios WHERE 
-		idusuarios = '$iduser'";
+		idusuarios = '$iduser' AND status = '1' ";
 $resultado = $conexion->query($sql);
 $row = $resultado->fetch_assoc();
 ?>
@@ -19,7 +19,7 @@ $row = $resultado->fetch_assoc();
 </head>
 <body>
 	<span>
-		<h1>Bievenido usuario</h1>
+		<h1>Bievenido Administrador</h1>
 	<?php echo utf8_decode($row['NombreC']); ?>
 	</span>
 	<a href="salir.php">

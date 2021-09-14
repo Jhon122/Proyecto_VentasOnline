@@ -1,8 +1,8 @@
 <?php
-include("../BD/conexion.php");
+include("BD/conexion.php");
 session_start();
 if(isset($_SESSION['id_usuario'])){
-	header("Location: admin.php");
+	header("Location: page.php");
 }
 
 //login usuario
@@ -11,18 +11,18 @@ if(isset($_POST["ingresar"])){
 	$usuario = mysqli_real_escape_string($conexion, $_POST['user']);
 	$password = mysqli_real_escape_string($conexion, $_POST['pass']);
 	$password_encriptada = sha1($password);
-	$sql = "SELECT idusuarios FROM usuarios 
-			WHERE usuario = '$usuario' AND password = '$password_encriptada'";
+	$sql = "SELECT idusuarios FROM usuarios  
+			WHERE usuario = '$usuario' AND password = '$password_encriptada' AND status = '0'";
 	$resultado = $conexion->query($sql);
 	$rows = $resultado->num_rows;
 	if($rows>0){
 		$row = $resultado->fetch_assoc();
 		$_SESSION['id_usuario'] = $row["idusuarios"];
-		header("Location: admin.php");
+		header("Location: page.php");
 	}else{
 			echo "<script>
 				alert('Usuario o Password Incorrecto');
-				window.location = 'ingreso.php';
+				window.location = 'login.php';
 			</script>";
 	}
 }
@@ -45,18 +45,18 @@ if(isset($_POST["registrar"])){
 			</script>";
 	}else{
 		$sqlusuario = "INSERT  INTO 
-			usuarios(NombreC,Correo, Usuario, Password) 
-			VALUES ('$nombre','$correo','$usuario','$password_encriptada')";
+			usuarios(NombreC,Correo, Usuario, Password, status) 
+			VALUES ('$nombre','$correo','$usuario','$password_encriptada','0')";
 		$resultadousuario = $conexion->query($sqlusuario);
 		if($resultadousuario > 0) {
 		echo "<script>
 				alert('Registro Exitoso');
-				window.location = 'ingreso.php';
+				window.location = 'login.php';
 			</script>";
 		}else{
 		echo "<script>
 				alert('Error al registrarse');
-				window.location = 'ingreso.php';
+				window.location = 'login.php';
 			</script>";
 		}
 	}
@@ -77,19 +77,19 @@ if(isset($_POST["registrar"])){
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
 		<!-- text fonts -->
-		<link rel="stylesheet" href="../assets/css/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
-		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<link rel="stylesheet" href="assets/css/ace.min.css" />
 
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" />
 		<![endif]-->
-		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
 
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
@@ -102,8 +102,10 @@ if(isset($_POST["registrar"])){
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
-
-	<body class="login-layout">
+<br>
+<br>
+<br>
+	<body class="login-layout blur-login">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -176,9 +178,9 @@ if(isset($_POST["registrar"])){
 
 										<div class="toolbar clearfix">
 											<div>
-												<a href="#" data-target="#forgot-box" class="forgot-password-link">
+												<a href="index.php" class="forgot-password-link">
 													<i class="ace-icon fa fa-arrow-left"></i>
-													Olvide mi contraseña
+													Regresar a la pagina
 												</a>
 											</div>
 
@@ -192,7 +194,7 @@ if(isset($_POST["registrar"])){
 									</div><!-- /.widget-body -->
 								</div><!-- /.login-box -->
 
-								<div id="forgot-box" class="forgot-box widget-box no-border">
+<!-- 								<div id="forgot-box" class="forgot-box widget-box no-border">
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header red lighter bigger">
@@ -223,14 +225,14 @@ if(isset($_POST["registrar"])){
 						</form>
 				</div><!-- /.widget-main -->
 
-	<div class="toolbar center">
+<!-- 	<div class="toolbar center">
 		<a href="#" data-target="#login-box" class="back-to-login-link">
 			Regresar al Login
 			<i class="ace-icon fa fa-arrow-right"></i>
 			</a>
-			</div>
-			</div><!-- /.widget-body -->
-			</div><!-- /.forgot-box -->
+			</div> -->
+	<!-- 		</div>/.widget-body 
+			</div>/.forgot-box -->
 
 	<div id="signup-box" class="signup-box widget-box no-border">
              	<div class="widget-body">
@@ -336,7 +338,7 @@ if(isset($_POST["registrar"])){
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
-		<script src="../assets/js/jquery-2.1.4.min.js"></script>
+		<script src="assets/js/jquery-2.1.4.min.js"></script>
 
 		<!-- <![endif]-->
 
