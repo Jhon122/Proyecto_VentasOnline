@@ -1,29 +1,26 @@
 <?php 
 include("../BD/conexion.php");
+require 'admin/config.php';
+require 'functions.php';
+
 session_start();
-if(!isset($_SESSION['id_usuario'])){
-	header("Location: ingreso.php");
-}
+ if(!isset($_SESSION['id_usuario'])){
+	 header("Location: ingreso.php"); 
+	print "Mejorar";
+} 
 $iduser = $_SESSION['id_usuario'];
 
 $sql = "SELECT idusuarios, NombreC FROM usuarios WHERE 
 		idusuarios = '$iduser' AND status = '1' ";
 $resultado = $conexion->query($sql);
-$row = $resultado->fetch_assoc();
-?>
+$row = $resultado->fetch_assoc(); 
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<span>
-		<h1>Bievenido Administrador</h1>
-	<?php echo utf8_decode($row['NombreC']); ?>
-	</span>
-	<a href="salir.php">
-		SALIR
-	</a>
-</body>
-</html>
+
+
+$conexion2 = conexion($bd_config);
+$posts = obtener_post($blog_config['post_por_pagina'], $conexion2);
+
+require 'views/admin_index.view.php';
+
+
+?>
